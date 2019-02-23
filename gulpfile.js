@@ -1,12 +1,29 @@
-const  gulp=require('gulp');    //引用gulp
-const  cssmin = require('gulp-clean-css');
-const rename = require('gulp-rename');
+const gulp = require('gulp');
 const less = require('gulp-less');
-const imgmin = require('gulp-imagemin');//图片压缩
-//wxml
-gulp.task('compile-wxml',()=>{
-    return gulp.src(['./src/**/**/*.wxml'])
-        .pipe(gulp.dest('./examples/'))
+const cssmin = require('gulp-clean-css');
+const jsmin = require('gulp-uglify');
+const imgmin = require('gulp-imagemin');
+const rename = require('gulp-rename');
+const connect = require('gulp-connect');
+//网络服务
+gulp.task('server',()=>{
+    connect.server({
+        root:'./dist',
+        port: 3001,
+        livereload:true
+    })
+})
+//html
+gulp.task('compile-html',()=>{
+    return gulp.src(['./src/*.html'])
+        .pipe(gulp.dest('./dist/'))
+
+})
+//img
+gulp.task('compile-img',()=>{
+    return gulp.src('./src/images/*.*')
+        .pipe(imgmin({progressive: true}))
+        .pipe(gulp.dest('./dist/images/'))
 })
 //less
 gulp.task('compile-less',()=>{
@@ -14,45 +31,36 @@ gulp.task('compile-less',()=>{
         .pipe(less())
         .pipe(cssmin())
         .pipe(rename((path)=>{
-            path.extname = '.wxss'
+            path.extname = '.css'
         }))
-        .pipe(gulp.dest('./examples/'))
+        .pipe(gulp.dest('./dist/'))
+
+
 })
 //js
 gulp.task('compile-js',()=>{
     return gulp.src(['./src/**/*.js','./src/*.js'])
-        .pipe(gulp.dest('./examples/'))
-})
-//json
-gulp.task('compile-json',()=>{
-    return gulp.src(['./src/**/*.json','./src/*.json'])
-        .pipe(gulp.dest('./examples/'))
-})
-//wxss
-gulp.task('compile-wxss',()=>{
-    return gulp.src(['./src/**/*.wxss','./src/*.wxss'])
-        .pipe(less())
-        .pipe(cssmin())
-        .pipe(gulp.dest('./examples/'))
-})
-//压缩图片
-gulp.task('compile-img',()=>{
-    return gulp.src(['./src/pages/imgs/*.*'])
-        .pipe(imgmin({
-            progressive: true
-        }))
-        .pipe(gulp.dest('./examples/pages/imgs/'))
-})
+        .pipe(jsmin())
+        .pipe(gulp.dest('./dist/'))
 
+
+})
 gulp.task('auto',()=>{
-    gulp.watch('./src/**/*.wxml',gulp.series('compile-wxml'));
+    gulp.watch('./src/**/*.html',gulp.series('compile-html'));
     gulp.watch('./src/**/*.less',gulp.series('compile-less'));
-    gulp.watch('./src/**/*.wxss',gulp.series('compile-wxss'));
     gulp.watch('./src/**/*.js',gulp.series('compile-js'));
-    gulp.watch('./src/**/*.json',gulp.series('compile-json'));
-    gulp.watch('./src/pages/imgs/*.*',gulp.series('compile-img'));
+    gulp.watch('./src/images/*.*',gulp.series('compile-img'));
+    gulp.watch('./dist/**/*.*',gulp.series('reload'))
 
 })
-gulp.task('default',gulp.series('compile-less','compile-wxml','compile-wxss','compile-js','compile-json','compile-img','auto',function(){}))
+
+gulp.task("reload", function() {
+    return gulp.src("./dist/**/*.*")
+        .pipe(connect.reload());
+})
 
 
+
+gulp.task('default',gulp.parallel('compile-less','compile-html','compile-js','compile-img','auto','server',async ()=>{
+
+}))
