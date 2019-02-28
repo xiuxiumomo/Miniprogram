@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const less = require('gulp-less');
 const cssmin = require('gulp-clean-css');
 const jsmin = require('gulp-uglify');
+const babel = require('gulp-babel'); //转换
 const imgmin = require('gulp-imagemin');
 const rename = require('gulp-rename');
 const connect = require('gulp-connect');
@@ -40,6 +41,7 @@ gulp.task('compile-less',()=>{
 //js
 gulp.task('compile-js',()=>{
     return gulp.src(['./src/**/*.js','./src/*.js'])
+        .pipe(babel())
         .pipe(jsmin())
         .pipe(gulp.dest('./dist/'))
 
