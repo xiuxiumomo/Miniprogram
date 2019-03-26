@@ -1,0 +1,11 @@
+  <picker
+    mode="multiSelector"
+    bindchange="changeFn"
+    bindcolumnchange="cloumChnageFn"
+    value="{{multiIndex}}"
+    range="{{multiArray}}"
+  >
+    <view class="l_picker">
+      {{showDate}}
+    </view>
+</picker>

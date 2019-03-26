@@ -1,0 +1,11 @@
+##p_time 可以选日月时分 （特殊需求）
+用法：      1.引入组件
+	2.页面中
+ "time-pick": "../../components/p_time/index"
+ <view>
+    <time-pick bind:sureFn="sureFn"></time-pick>
+</view>
+
+##modal 
+1.引入组件
+2. 父组件传入show 和 height

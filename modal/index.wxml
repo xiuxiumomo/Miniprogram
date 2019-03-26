@@ -1,0 +1,6 @@
+<!--logs.wxml-->
+<view class="outter" wx:if='{{show}}' bindtap='closeFn'>
+    <view class='inner_bg' style="height:{{height}}" catchtap="catchClose">
+         <slot></slot>
+    </view>
+</view>

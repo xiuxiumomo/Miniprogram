@@ -1,0 +1,4 @@
+/* components/p_time/index.wxss */
+.l_picker{
+    font-size: 24rpx;
+}
