@@ -23,18 +23,16 @@ import './index.less'
 class Index extends Component {
 
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '首页1'
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  componentDidMount() {
+    console.log(process.env.BASE_API)
   }
-
-  componentWillUnmount () { }
 
   componentDidShow () { }
 
-  componentDidHide () { }
+
 
   render () {
     return (

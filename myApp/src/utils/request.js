@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { getToken } from './index'
-const baseApi = 'http://www.baidu.com'
+const baseApi = process.env.BASE_API
 export default function request(url, {
   params = {},
   method = 'GET',
