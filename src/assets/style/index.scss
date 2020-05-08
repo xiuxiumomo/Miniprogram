@@ -1,0 +1,5 @@
+@import './common'; //公共
+@import './mixin'; //混合
+@import './varible'; //常量
+@import './module/my.scss'; //我的页面
+@import '~taro-ui/dist/style/index.scss'

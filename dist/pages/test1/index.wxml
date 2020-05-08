@@ -1,0 +1,5 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="index"><text>Hello world，你好啊!222</text>
+        <at-button compid="{{$compid__2}}">按钮</at-button>
+    </view>
+</block>

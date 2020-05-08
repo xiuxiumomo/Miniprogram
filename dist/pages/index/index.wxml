@@ -1,0 +1,5 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="index"><text bindtap="getStorageData">Hello world，你好啊!</text>
+        <button bindtap="goRouter">点击</button>
+    </view>
+</block>
